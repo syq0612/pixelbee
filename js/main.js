@@ -1,7 +1,7 @@
 // 文件：js/main.js
 // 官网首页交互 + 启动闪屏
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // ---------- 启动闪屏 ----------
     const splash = document.getElementById('splashScreen');
@@ -31,21 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (p > 70 && msgIdx === 1) { msgIdx = 2; text.textContent = messages[2]; }
     }, 120);
 
-    // ---------- 下载离线版 ----------
+    // 下载离线版 - 直接下载预先打包好的 ZIP
     const downloadBtn = document.getElementById('downloadOfflineBtn');
     if (downloadBtn) {
         downloadBtn.addEventListener('click', function() {
-            const html = document.documentElement.outerHTML;
-            const blob = new Blob(['<!DOCTYPE html>\n' + html], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'PixelBee_拼豆大师_离线版.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            alert('✅ 离线版下载成功！双击HTML文件即可离线使用。');
+            const link = document.createElement('a');
+            link.href = 'PixelBee_离线版.zip';
+            link.download = 'PixelBee_拼豆大师_完整源码.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
     }
 });
