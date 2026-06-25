@@ -1,5 +1,5 @@
 // 文件：js/main.js
-// 官网首页交互 + 启动闪屏 + 下载离线版（直接下载 offline.html）
+// 官网首页交互 + 启动闪屏
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -35,13 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadOfflineBtn');
     if (downloadBtn) {
         downloadBtn.addEventListener('click', function() {
-            // 直接下载预先准备好的 offline.html
-            const link = document.createElement('a');
-            link.href = 'offline.html';
-            link.download = 'PixelBee_拼豆大师_离线版.html';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob(['<!DOCTYPE html>\n' + html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'PixelBee_拼豆大师_离线版.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('✅ 离线版下载成功！双击HTML文件即可离线使用。');
         });
     }
 });
