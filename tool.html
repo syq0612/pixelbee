@@ -40,14 +40,14 @@
                 <input type="range" id="zoomSlider" min="10" max="400" value="100" step="5">
             </div>
             <div style="margin-top:8px;font-size:12px;color:#6C6C8A;">
-                💡 当前模式：<span id="modeDisplay">选色</span>（点击格子选中，然后点击“更换颜色”按钮修改）
+                💡 当前模式：<span id="modeDisplay">选色</span>（点击格子选中，然后点击"更换颜色"按钮修改）
             </div>
         </div>
 
         <!-- 右侧控制面板 -->
         <div class="control-panel">
 
-            <!-- ===== 0. 工具模式 ===== -->
+            <!-- ===== 工具模式 ===== -->
             <div class="control-group">
                 <label>🛠️ 工具模式</label>
                 <div style="display:flex; gap: 8px;">
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <!-- ===== 新增：选中格子信息 + 换色按钮 ===== -->
+            <!-- ===== 选中格子信息 + 换色按钮 ===== -->
             <div class="control-group" style="background:#1A1A2E; padding:8px 10px; border-radius:8px; border:1px solid #2A2A4A;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span style="font-size:13px; color:#A8A8C8;">选中格子</span>
@@ -65,12 +65,11 @@
                 <button id="changeColorBtn" class="btn-export" style="width:100%; margin-top:6px; background: linear-gradient(135deg,#F39C12,#E67E22);">🎨 更换颜色</button>
             </div>
 
-            <!-- ===== 1. 品牌选择 ===== -->
+            <!-- ===== 1. 品牌选择（动态生成） ===== -->
             <div class="control-group">
                 <label for="brandSelect">🏷️ 拼豆品牌</label>
                 <select id="brandSelect" class="brand-select">
-                    <option value="h_series">H系列 (国产通用)</option>
-                    <option value="artkal_s">Artkal (S系列 实色)</option>
+                    <!-- 由 JS 动态生成 -->
                 </select>
             </div>
 
@@ -143,12 +142,13 @@
                 <input type="checkbox" id="showGridCheck" checked>
                 <label for="showGridCheck">显示网格线</label>
             </div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="allowSpecialCheck" checked>
-                <label for="allowSpecialCheck">⭐ 允许使用特殊色</label>
+
+            <!-- ===== 6. 色系选择（动态生成） ===== -->
+            <div id="optionalPrefixContainer" style="background:#1A1A2E;padding:10px;border-radius:8px;border:1px solid #2A2A4A;max-height:150px;overflow-y:auto;">
+                <div style="font-size:12px;color:#6C6C8A;">加载中...</div>
             </div>
 
-            <!-- ===== 6. 生成按钮 + 进度条 ===== -->
+            <!-- ===== 7. 生成按钮 + 进度条 ===== -->
             <button class="btn-generate" id="generateBtn">⚡ 生成拼豆图纸</button>
             <div id="progressContainer" style="display:none;margin-top:4px;">
                 <div class="progress-bar-track">
@@ -157,7 +157,7 @@
                 <div style="font-size:11px;color:#6C6C8A;margin-top:4px;text-align:center;" id="progressText">处理中...</div>
             </div>
 
-            <!-- ===== 7. 颜色比较器 ===== -->
+            <!-- ===== 8. 颜色比较器 ===== -->
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">🔍 颜色比较器</div>
                 <div id="comparatorList" style="max-height:100px;overflow-y:auto;font-size:12px;color:#A8A8C8;">
@@ -165,7 +165,7 @@
                 </div>
             </div>
 
-            <!-- ===== 8. 颜色图例 ===== -->
+            <!-- ===== 9. 颜色图例 ===== -->
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">🎨 使用色号</div>
                 <div class="color-legend" id="colorLegend">
@@ -173,7 +173,7 @@
                 </div>
             </div>
 
-            <!-- ===== 9. 文件管理 ===== -->
+            <!-- ===== 10. 文件管理 ===== -->
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">💾 文件管理</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
@@ -187,7 +187,7 @@
                 </select>
             </div>
 
-            <!-- ===== 10. 导出 ===== -->
+            <!-- ===== 11. 导出 ===== -->
             <div style="display:flex;gap:6px;">
                 <button class="btn-export" id="exportPngBtn" disabled style="flex:1;">📷 PNG</button>
                 <button class="btn-export" id="exportCszBtn" disabled style="flex:1; background: linear-gradient(135deg,#E67E22,#D35400);">📊 CSZ</button>

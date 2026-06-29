@@ -145,7 +145,9 @@ const PALETTES = {
             { id: "R15", hex: "#78cfea" },
             { id: "R16", hex: "#39cfc6" },
             { id: "R17", hex: "#498778" },
-            { id: "R18", hex: "#7fc893" }
+            { id: "R18", hex: "#7fc893" },
+            { id: "R19", hex: "#cce762" },
+            { id: "R20", hex: "#eac7b3"}
         ]
     },
 };
