@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e8f0f8">
     <title>拼豆工坊 · PixelBee</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -57,15 +58,15 @@
             </div>
 
             <!-- ===== 选中格子信息 + 换色按钮 ===== -->
-            <div class="control-group" style="background:#1A1A2E; padding:8px 10px; border-radius:8px; border:1px solid #2A2A4A;">
+            <div class="control-group" style="background:rgba(255,255,255,0.4); padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.8);">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:13px; color:#A8A8C8;">选中格子</span>
-                    <span id="selectedCellDisplay" style="font-size:13px; color:#EAEAFF; font-weight:600;">无</span>
+                    <span style="font-size:13px; color:#7a9aac;">选中格子</span>
+                    <span id="selectedCellDisplay" style="font-size:13px; color:#4a6a80; font-weight:600;">无</span>
                 </div>
-                <button id="changeColorBtn" class="btn-export" style="width:100%; margin-top:6px; background: linear-gradient(135deg,#F39C12,#E67E22);">🎨 更换颜色</button>
+                <button id="changeColorBtn" class="btn-export" style="width:100%; margin-top:6px; background: linear-gradient(135deg,#f0b888,#e8a070); color:#fff; border:none;">🎨 更换颜色</button>
             </div>
 
-            <!-- ===== 1. 品牌选择（动态生成） ===== -->
+            <!-- ===== 1. 品牌选择 ===== -->
             <div class="control-group">
                 <label for="brandSelect">🏷️ 拼豆品牌</label>
                 <select id="brandSelect" class="brand-select">
@@ -95,16 +96,16 @@
             <div id="customSizeGroup" style="display:none; margin-top: 6px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div style="flex:1;">
-                        <label style="font-size:12px; color:#A8A8C8;">宽度</label>
-                        <input type="number" id="customWidth" value="29" min="4" max="1000" style="width:100%; padding:4px 6px; background:#1A1A2E; color:#EAEAFF; border:1px solid #2A2A4A; border-radius:6px;">
+                        <label style="font-size:12px; color:#8aa8bc;">宽度</label>
+                        <input type="number" id="customWidth" value="29" min="4" max="1000" style="width:100%; padding:8px 10px; background:rgba(255,255,255,0.8); color:#4a6a80; border:1px solid rgba(255,255,255,0.9); border-radius:10px; font-size:13px;">
                     </div>
                     <button id="lockAspectBtn" style="background:none; border:none; font-size:24px; cursor:pointer; margin-top:12px;" title="锁定图片长宽比">🔒</button>
                     <div style="flex:1;">
-                        <label style="font-size:12px; color:#A8A8C8;">高度</label>
-                        <input type="number" id="customHeight" value="29" min="4" max="1000" style="width:100%; padding:4px 6px; background:#1A1A2E; color:#EAEAFF; border:1px solid #2A2A4A; border-radius:6px;">
+                        <label style="font-size:12px; color:#8aa8bc;">高度</label>
+                        <input type="number" id="customHeight" value="29" min="4" max="1000" style="width:100%; padding:8px 10px; background:rgba(255,255,255,0.8); color:#4a6a80; border:1px solid rgba(255,255,255,0.9); border-radius:10px; font-size:13px;">
                     </div>
                 </div>
-                <div style="font-size:11px; color:#6C6C8A; margin-top:4px;">
+                <div style="font-size:11px; color:#a8bcc8; margin-top:4px;">
                     💡 锁定后（🔒）宽度自动按图片比例调整高度
                 </div>
             </div>
@@ -115,7 +116,27 @@
                 <input type="range" id="beadSizeSlider" min="8" max="60" value="24" step="1">
             </div>
 
-            <!-- ===== 4. 限制最大颜色数 ===== -->
+            <!-- ===== 4. 购买套装选择 ===== -->
+            <div class="control-group">
+                <label for="setSelect">📦 购买的套装</label>
+                <select id="setSelect" class="brand-select">
+                    <!-- 由 JS 动态生成 -->
+                </select>
+            </div>
+
+            <!-- ===== 排除色号 ===== -->
+            <div class="control-group" style="border-top:1px solid rgba(200,220,235,0.4); padding-top:12px;">
+                <label style="font-size:13px; color:#7a9aac;">🚫 排除色号</label>
+                <div style="display:flex; gap:6px; margin-top:4px;">
+                    <input type="text" id="excludeColorInput" placeholder="输入色号，如 H10" style="flex:1; padding:8px 10px; background:rgba(255,255,255,0.8); color:#4a6a80; border:1px solid rgba(255,255,255,0.9); border-radius:10px; font-size:13px;">
+                    <button id="addExcludeBtn" class="btn-sm btn-danger" style="font-size:12px;">排除</button>
+                </div>
+                <div id="excludedColorList" style="display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; font-size:12px; color:#8aa8bc;">
+                    <!-- 已排除的色号将显示在这里 -->
+                </div>
+            </div>
+
+            <!-- ===== 5. 限制最大颜色数 ===== -->
             <div class="control-group">
                 <label>🎨 限制最大颜色数</label>
                 <div style="display: flex; gap: 6px;">
@@ -129,11 +150,11 @@
                         <option value="32">32 色</option>
                         <option value="custom">✨ 自定义</option>
                     </select>
-                    <input type="number" id="customMaxColors" value="10" min="1" max="64" style="flex:1; padding:4px 6px; background:#1A1A2E; color:#EAEAFF; border:1px solid #2A2A4A; border-radius:6px; display:none;">
+                    <input type="number" id="customMaxColors" value="10" min="1" max="64" style="flex:1; padding:8px 10px; background:rgba(255,255,255,0.8); color:#4a6a80; border:1px solid rgba(255,255,255,0.9); border-radius:10px; display:none; font-size:13px;">
                 </div>
             </div>
 
-            <!-- ===== 5. 显示选项 ===== -->
+            <!-- ===== 6. 显示选项 ===== -->
             <div class="checkbox-group">
                 <input type="checkbox" id="showNumberCheck" checked>
                 <label for="showNumberCheck">显示色号数字</label>
@@ -143,9 +164,10 @@
                 <label for="showGridCheck">显示网格线</label>
             </div>
 
-            <!-- ===== 6. 色系选择（动态生成） ===== -->
-            <div id="optionalPrefixContainer" style="background:#1A1A2E;padding:10px;border-radius:8px;border:1px solid #2A2A4A;max-height:150px;overflow-y:auto;">
-                <div style="font-size:12px;color:#6C6C8A;">加载中...</div>
+            <!-- ===== 状态指示器 ===== -->
+            <div id="statusIndicator">
+                <span id="statusDot" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#4CAF50;"></span>
+                <span id="statusText">就绪</span>
             </div>
 
             <!-- ===== 7. 生成按钮 + 进度条 ===== -->
@@ -154,13 +176,13 @@
                 <div class="progress-bar-track">
                     <div class="progress-bar-fill" id="genProgress" style="width:0%;"></div>
                 </div>
-                <div style="font-size:11px;color:#6C6C8A;margin-top:4px;text-align:center;" id="progressText">处理中...</div>
+                <div style="font-size:11px;color:#8aa8bc;margin-top:4px;text-align:center;" id="progressText">处理中...</div>
             </div>
 
             <!-- ===== 8. 颜色比较器 ===== -->
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">🔍 颜色比较器</div>
-                <div id="comparatorList" style="max-height:100px;overflow-y:auto;font-size:12px;color:#A8A8C8;">
+                <div id="comparatorList" style="max-height:100px;overflow-y:auto;font-size:12px;color:#7a9aac;">
                     生成图纸后显示颜色对比
                 </div>
             </div>
@@ -169,7 +191,7 @@
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">🎨 使用色号</div>
                 <div class="color-legend" id="colorLegend">
-                    <span style="color:#3A3A5A; font-size:12px;">暂无数据</span>
+                    <span style="color:#a8bcc8; font-size:12px;">暂无数据</span>
                 </div>
             </div>
 
@@ -177,7 +199,7 @@
             <div>
                 <div class="ctrl-title" style="border-bottom: none; padding-bottom: 4px;">💾 文件管理</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
-                    <input type="text" id="fileNameInput" placeholder="图纸名称" style="flex:1; padding:6px 10px; background:#1A1A2E; color:#EAEAFF; border:1px solid #2A2A4A; border-radius:6px; font-size:13px;">
+                    <input type="text" id="fileNameInput" placeholder="图纸名称" style="flex:1; padding:8px 10px; background:rgba(255,255,255,0.8); color:#4a6a80; border:1px solid rgba(255,255,255,0.9); border-radius:10px; font-size:13px;">
                     <button class="btn-sm btn-primary" id="saveFileBtn">保存</button>
                     <button class="btn-sm btn-secondary" id="loadFileBtn">加载</button>
                     <button class="btn-sm btn-danger" id="deleteFileBtn">删除</button>
@@ -190,10 +212,19 @@
             <!-- ===== 11. 导出 ===== -->
             <div style="display:flex;gap:6px;">
                 <button class="btn-export" id="exportPngBtn" disabled style="flex:1;">📷 PNG</button>
-                <button class="btn-export" id="exportCszBtn" disabled style="flex:1; background: linear-gradient(135deg,#E67E22,#D35400);">📊 CSZ</button>
+                <button class="btn-export" id="exportCszBtn" disabled style="flex:1; background: linear-gradient(135deg,#f0b888,#e8a070); color:#fff; border:none;">📊 CSZ</button>
             </div>
 
         </div>
+    </div>
+
+    <!-- ===== 错误显示面板 ===== -->
+    <div id="errorPanel" class="error-panel">
+        <div class="error-panel-header">
+            <span>⚠️ 错误日志</span>
+            <button class="error-panel-close" onclick="document.getElementById('errorPanel').classList.remove('show')">×</button>
+        </div>
+        <div id="errorList"></div>
     </div>
 
     <!-- Toast -->
